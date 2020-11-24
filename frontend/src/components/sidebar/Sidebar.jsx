@@ -1,26 +1,39 @@
 import styled from "styled-components";
 import React from "react";
-import SplitInput from "./SplitInput";
+import SplitsForm from "./SplitsForm";
 
-const SidebarDiv = styled.div`
+
+
+class Sidebar extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
+
+    SidebarDiv = styled.div`
     height: 100%;
-    width: 200px;
+    width: 300px;
     max-width: 30vw;
     background: rgb(30, 30, 30);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    padding: 10px;
 `
 
-function Sidebar() {
+    handleSubmit(event) {
+        alert('A name was submitted: ' + this.state.value);
+        event.preventDefault();
+    }
 
-    return (
-        <SidebarDiv >
-            <SplitInput/>
-            <SplitInput/>
-        </SidebarDiv>
-    );
+    render() {
+        return <this.SidebarDiv >
+            <SplitsForm/>
+        </this.SidebarDiv >
+    }
 }
 
 export default Sidebar;
