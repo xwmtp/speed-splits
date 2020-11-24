@@ -10,8 +10,22 @@ def parse_splits_io(id):
     return parse_segments(splits_json)
 
 def parse_segments(splits_json):
-    return [Segment(segment['display_name'], segment['realtime_duration_ms'], segment['realtime_shortest_duration_ms'])
-    for segment in splits_json['run']['segments']]
+    segments = []
+    prev_skipped_golds = 0
+    for segment in splits_json['run']['segments']:
+        name = segment['display_name']
+        duration = segment['realtime_duration_ms']
+        gold = segment['realtime_shortest_duration_ms']
+        segments.append(Segment(name, duration, gold, gold + prev_skipped_golds))
+        if segment['realtime_skipped']:
+            prev_skipped_golds += gold
+
+        if not segment['realtime_skipped']:
+            prev_skipped_golds = 0
+    return segments
+
+
+
 
 
 def request_splits(url, attempts=5):
