@@ -1,13 +1,14 @@
 import logging
 import requests
-from Segment import Segment
+from SegmentsModels import Segments, Segment
 
 logger = logging.getLogger('splt.parse.splitsio')
 
 
 def parse_splits_io(id):
     splits_json = request_splits(f'https://splits.io/api/v4/runs/{id}')
-    return parse_segments(splits_json)
+    segments_list = parse_segments(splits_json)
+    return Segments(segments_list)
 
 def parse_segments(splits_json):
     segments = []

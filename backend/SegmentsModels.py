@@ -1,5 +1,22 @@
-from util import to_timedelta
 import datetime as dt
+
+class Segments:
+
+    def __init__(self, segments):
+        self.segments = segments
+
+    def to_data(self):
+        return [segment.to_data() for segment in self.segments]
+
+    def __str__(self):
+        string = ''
+        if len(self.segments) == 0:
+            return str
+        string += ' '.join(self.segments[0].__dict__.keys()) + '\n'
+        for segment in self.segments:
+            string += str(segment) + '\n'
+        return string
+
 
 class Segment:
 
@@ -15,8 +32,10 @@ class Segment:
         return self.duration.ms == 0
 
     def __str__(self):
-        return f'{self.name}, {self.duration}, {self.gold}, {self.pb_gold}, {self.timesave}'
+        return ' '.join([str(s) for s in self.__dict__.values()])
 
+    def to_data(self):
+        return {key : str(value) for key, value in self.__dict__.items()}
 
 class VS_segment:
 
@@ -45,9 +64,11 @@ class Duration:
         self.ms = ms
 
     def __str__(self):
+        if self.ms == 0:
+            return '-'
         sign = '-' if self.ms < 0 else ''
         timestamp = str(dt.timedelta(milliseconds=abs(self.ms)))
         timestamp = ':'.join(timestamp.split(':')[1:])
         if '.' in timestamp:
-            timestamp = f"{timestamp.split('.')[0]}.{timestamp.split('.')[1][:2]}"
+            timestamp = f"{timestamp.split('.')[0]}.{timestamp.split('.')[1][:1]}"
         return sign + timestamp

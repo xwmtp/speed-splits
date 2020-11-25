@@ -17,21 +17,17 @@ class Sidebar extends React.Component {
     height: 100%;
     width: 300px;
     max-width: 30vw;
-    background: rgb(30, 30, 30);
+    background: var(--sidebar-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px;
 `
 
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
-    }
 
     render() {
-        return <this.SidebarDiv >
-            <SplitsForm/>
+        return <this.SidebarDiv id='sidebar' >
+            <SplitsForm id='splits-form'/>
         </this.SidebarDiv >
     }
 }
