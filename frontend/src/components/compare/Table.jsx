@@ -13,8 +13,9 @@ class Table extends React.Component {
     }
 
     render() {
-        const createRow = (segment_data) => { return <SplitsTableRow data={segment_data} /> }
-        const rows = this.props.data.map(split => createRow(split))
+        const createRow = (segment_data, index) => { return <SplitsTableRow data={segment_data} key={index} /> }
+
+        const rows = this.props.data.map((split, i) => createRow(split, i))
 
         return (
             <table>

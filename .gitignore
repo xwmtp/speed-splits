@@ -21,6 +21,7 @@ yarn.lock
 # BACKEND
 
 .idea/
+notebooks/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

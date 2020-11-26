@@ -14,20 +14,21 @@ class Sidebar extends React.Component {
     }
 
     SidebarDiv = styled.div`
-    height: 100%;
-    width: 300px;
-    max-width: 30vw;
-    background: var(--sidebar-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
+        height: 100%;
+        min-height: 100%;
+        width: 300px;
+        max-width: 30vw;
+        background: var(--sidebar-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
 `
 
 
     render() {
         return <this.SidebarDiv id='sidebar' >
-            <SplitsForm id='splits-form'/>
+            <SplitsForm makeRequest={this.props.makeRequest} id='splits-form'/>
         </this.SidebarDiv >
     }
 }

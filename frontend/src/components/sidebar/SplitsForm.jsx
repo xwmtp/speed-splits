@@ -27,18 +27,17 @@ class SplitsForm extends React.Component {
     `
     handleYouChange(event) {
         console.log(`YOU ${event.target.value} updated`);
-        this.setState({...this.state, you: {...this.state.you, [event.target.name]: event.target.value}})
+        this.setState({you: {[event.target.name]: event.target.value}})
         console.log(this.state);
     }
     handleThemChange(event) {
         console.log(`THEM ${event.target.value} updated`);
-        this.setState({...this.state, them: {...this.state.them, [event.target.name]: event.target.value}})
+        this.setState({them: {[event.target.name]: event.target.value}})
         console.log(this.state);
     }
 
     handleFormSubmit(event) {
-        console.log("SUBMITTED:")
-        console.log(this.state)
+        this.props.makeRequest({...this.state})
     }
 
 

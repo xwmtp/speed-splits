@@ -9,8 +9,10 @@ class ComparePage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = { splitsData: [] }
+        this.requestSplitsData = this.requestSplitsData.bind(this);
     }
+
 
     PageDiv = styled.div`
         display: flex;
@@ -35,14 +37,34 @@ class ComparePage extends React.Component {
         }
     `;
 
+    requestSplitsData(formData) {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/splits?you_splitsio=${formData['you']['splitsio']}/`, {
+            method: "get",
+            mode: "cors"
+        })
+            .then(r => {
+                if (r.status / 100 !== 2) {
+                    throw Error();
+                }
+                console.log("Got json")
+                return r.json()
+            })
+            .then(splitsData => {
+                this.setState({ splitsData: splitsData });
+                console.log("Got response:");
+                console.log(this.state);
+            })
+
+    }
+
 
     render() {
         return (
             <this.PageDiv id='compare-page'>
-                <Sidebar />
+                <Sidebar makeRequest={this.requestSplitsData} />
                 <this.CompareDiv id='compare-div'>
-                    <TableBlock title='You' data={youData}/>
-                    <TableBlock title='Them' data={themData}/>
+                    <TableBlock title='You' data={this.state.splitsData} />
+
                 </this.CompareDiv>
             </this.PageDiv>
         );
@@ -71,9 +93,9 @@ function TableBlock(props) {
 
     return (
         <TableDiv id='table-block'>
-                <h2 id='block-title'>{props.title}</h2>
+            <h2 id='block-title'>{props.title}</h2>
 
-            <Table data={props.data}/>
+            <Table data={props.data} />
         </TableDiv>
     );
 }
