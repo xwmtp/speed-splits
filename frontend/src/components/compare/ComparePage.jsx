@@ -2,8 +2,6 @@ import styled from "styled-components";
 import React from "react";
 import Sidebar from '../sidebar/Sidebar.jsx'
 import Table from "./Table.jsx";
-import youData from '../../you.js'
-import themData from '../../them.js'
 
 class ComparePage extends React.Component {
 
