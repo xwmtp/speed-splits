@@ -1,18 +1,14 @@
-from Parse.SplitsIO import parse_splits_io
 from Duration import Duration
 import pandas as pd
 import numpy as np
 
-def get_splitsio_data(you_id, them_id=None):
-    you_df = parse_splits_io(you_id)
-    you_df  = add_time_save_columns(you_df)
-    if not them_id:
+def get_table_data(you_base_df, them_base_df=None):
+    you_df  = add_time_save_columns(you_base_df)
+    if not them_base_df:
         return df_to_json(you_df, decimals=1)
-    them_df = parse_splits_io(them_id)
-    them_df = add_time_save_columns(them_df)
+    them_df = add_time_save_columns(them_base_df)
     vs_df = build_vs_df(you_df, them_df)
     return df_to_json(vs_df, decimals=1)
-
 
 def add_time_save_columns(df):
     df = _fix_durations_shorter_than_gold(df)

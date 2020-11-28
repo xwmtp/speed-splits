@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React from "react";
 import Sidebar from '../sidebar/Sidebar.jsx'
-import Table from "./Table.jsx";
+import Table from "./SplitsTable.jsx";
 
 class ComparePage extends React.Component {
 
@@ -25,7 +25,8 @@ class ComparePage extends React.Component {
         padding: 20px;
         display: flex;
         flex-direction: row;
-        table {   
+        table {  
+            tr:nth-child(even) {background-color: rgb(35,35,35);} 
             td, th {
                 padding: 5px 20px;
                 border: none;
@@ -36,7 +37,10 @@ class ComparePage extends React.Component {
     `;
 
     requestSplitsData(formData) {
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/splits?you_splitsio=${formData['you']['splitsio']}/`, {
+        const url = `${process.env.REACT_APP_BACKEND_URL}/splits?you_splitsio=${formData['you']['splitsio']}&them_splitsio=${formData['them']['splitsio']}`
+        console.log(formData)
+        console.log(url)
+        fetch(url, {
             method: "get",
             mode: "cors"
         })
@@ -89,11 +93,18 @@ const TableDiv = styled.div`
 
 function TableBlock(props) {
 
-    return (
-        <TableDiv id='table-block'>
-            <h2 id='block-title'>{props.title}</h2>
+    let pageContent;
+    if ('error' in props.data) {
+        pageContent = <p>{props.data['error']}</p>
+    }
+    else {
+        pageContent = (
+            <TableDiv id='table-block'>
+                <h2 id='block-title'>{props.title}</h2>
+                <Table data={props.data} />
+            </TableDiv>)
+    }
 
-            <Table data={props.data} />
-        </TableDiv>
-    );
+
+    return pageContent
 }

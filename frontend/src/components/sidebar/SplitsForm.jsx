@@ -26,14 +26,10 @@ class SplitsForm extends React.Component {
         width: 100%;
     `
     handleYouChange(event) {
-        console.log(`YOU ${event.target.value} updated`);
         this.setState({you: {[event.target.name]: event.target.value}})
-        console.log(this.state);
     }
     handleThemChange(event) {
-        console.log(`THEM ${event.target.value} updated`);
         this.setState({them: {[event.target.name]: event.target.value}})
-        console.log(this.state);
     }
 
     handleFormSubmit(event) {

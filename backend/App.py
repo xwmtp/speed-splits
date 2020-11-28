@@ -1,10 +1,12 @@
 from Logger import initalize_logger
-from flask import Flask, request, jsonify
-from flask_cors import CORS, cross_origin
-import SplitsData
-import json
+from Parse.SplitsIO import parse_splits_io
+from flask import Flask, request
+from flask_cors import CORS
+from SplitsData import get_table_data
+import logging
 
 initalize_logger()
+logger = logging.getLogger('splt.api')
 
 app = Flask(__name__)
 CORS(app)
@@ -19,10 +21,15 @@ def index():
 
 @app.route('/api/splits/', methods=['GET'])
 def splits_data():
-    splitsio_you_id  = request.args['you_splitsio']
-    try:
-        splitsio_them_id = request.args['them_splitsio']
-    except KeyError:
-        splitsio_them_id = None
-    data = SplitsData.get_splitsio_data(splitsio_you_id, splitsio_them_id)
-    return data
+    splitsio_you_id  = request.args.get('you_splitsio', '')
+    splitsio_them_id = request.args.get('them_splitsio', '')
+    logger.info(request.args)
+
+    you_base_df = parse_splits_io(splitsio_you_id)
+    them_base_df = parse_splits_io(splitsio_them_id)
+
+    if you_base_df is None:
+        return {'error': f"Invalid splits.io id '{splitsio_you_id}' for YOU."}
+    if them_base_df is None and splitsio_them_id != '':
+        return {'error': f"Invalid splits.io id '{splitsio_them_id}' for THEM."}
+    return get_table_data(you_base_df, them_base_df)
