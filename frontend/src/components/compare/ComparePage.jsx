@@ -7,7 +7,7 @@ class ComparePage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { splitsData: [] }
+        this.state = { splitsData: {} }
         this.requestSplitsData = this.requestSplitsData.bind(this);
     }
 

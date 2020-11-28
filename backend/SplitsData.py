@@ -5,10 +5,10 @@ import numpy as np
 def get_table_data(you_base_df, them_base_df=None):
     you_df  = add_time_save_columns(you_base_df)
     if not them_base_df:
-        return df_to_json(you_df, decimals=1)
+        return df_to_json(you_df, 'you_data', decimals=1)
     them_df = add_time_save_columns(them_base_df)
     vs_df = build_vs_df(you_df, them_df)
-    return df_to_json(vs_df, decimals=1)
+    return df_to_json(vs_df, 'vs_data', decimals=1)
 
 def add_time_save_columns(df):
     df = _fix_durations_shorter_than_gold(df)
@@ -51,6 +51,7 @@ def cells_to_strings(df, decimals = 3):
         print_df[col] = print_df[col].apply(lambda ms: Duration(ms).to_string_rounded(decimals))
     return print_df
 
-def df_to_json(df, decimals = 3):
+def df_to_json(df, title, decimals = 3):
     df = cells_to_strings(df, decimals)
-    return df.to_json(orient='records')
+    print(type(df.to_json(orient='records')))
+    return f'{{"{title}":{df.to_json(orient="records")}}}'
