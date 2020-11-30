@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
         width: 100%;
         background-color: var(--bg-color);
         color: white;
-        font-family: "PT Sans", sans-serif;
+        font-family: "Nunito", sans-serif;
   }
 
 `;

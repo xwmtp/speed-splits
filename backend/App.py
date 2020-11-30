@@ -3,7 +3,6 @@ from Parse.SplitsIO import parse_splits_io
 from flask import Flask, request
 from flask_cors import CORS
 from SplitsData import get_table_data
-import json
 import logging
 
 initalize_logger()
