@@ -140,7 +140,7 @@ class TableBlock extends React.Component {
                 { name: 'empty_1', type: 'empty', class: 'no-background' },
                 { name: 'gold_vs_gold', display: 'gold/gold', class: 'align-right split-colors' },
                 { name: 'pb_vs_pb', display: 'pb/pb', class: 'align-right split-colors' },
-                { name: 'gold_vs_pb', display: 'gold/gold', class: 'align-right split-colors' },
+                { name: 'gold_vs_pb', display: 'gold/pb', class: 'align-right split-colors' },
                 { name: 'empty_2', type: 'empty', class: 'no-background' },
                 { name: 'duration_them', display: 'PB', class: 'align-right split-colors' },
                 { name: 'gold_them', display: 'gold', class: 'align-right split-colors' },
