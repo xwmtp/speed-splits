@@ -20,14 +20,32 @@ def build_you_df(you_df):
 
 def build_you_vs_them_df(you_df, them_df):
     vs_df = pd.DataFrame()
-    vs_df['gold_vs_gold'] = you_df['gold'] - them_df['gold']
-    vs_df['pb_vs_pb'] = you_df['duration'] - them_df['duration']
-    vs_df['gold_vs_pb'] = you_df['gold'] - them_df['duration']
+    you_them_df = pd.concat([you_df.add_suffix('_you'), them_df.add_suffix('_them')], axis=1)
+    vs_df['gold_vs_gold'] = _get_col_vs_col(you_them_df, 'gold_you', 'gold_them')
+    vs_df['pb_vs_pb'] = _get_col_vs_col(you_them_df, 'duration_you', 'duration_them')
+    vs_df['gold_vs_pb'] = _get_col_vs_col(you_them_df, 'gold_you', 'duration_them')
     you_vs_them_df = pd.concat([you_df.add_suffix('_you'), vs_df, them_df.add_suffix('_them')], axis=1)
     for col in ['pb_gold', 'timesave']:
         you_vs_them_df = you_vs_them_df.drop(col + '_you',  axis=1)
         you_vs_them_df = you_vs_them_df.drop(col + '_them', axis=1)
     return you_vs_them_df
+
+def _get_col_vs_col(you_them_df, you_col, them_col):
+    you_vs_col = []
+    them_vs_col = []
+    prev_skipped_segments_you = 0
+    prev_skipped_segments_them = 0
+    for index, row in you_them_df.iterrows():
+        you_vs_col.append(row[you_col] + prev_skipped_segments_you)
+        them_vs_col.append(row[them_col] + prev_skipped_segments_them)
+        if np.isnan(row[you_col]) and not np.isnan(row[them_col]):
+            prev_skipped_segments_them += row[them_col]
+        if np.isnan(row[them_col]) and not np.isnan(row[you_col]):
+            prev_skipped_segments_you += row[you_col]
+        if not np.isnan(row[them_col]) and not np.isnan(row[you_col]):
+            prev_skipped_segments_you = 0
+            prev_skipped_segments_them = 0
+    return pd.Series(you_vs_col) - pd.Series(them_vs_col)
 
 def _add_time_save_columns(df):
     df = _fix_durations_shorter_than_gold(df)
