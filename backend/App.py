@@ -1,5 +1,6 @@
 from Logger import initalize_logger
 from Parse.SplitsIO import parse_splits_io
+from Parse.RawData import parse_raw_data
 from flask import Flask, request
 from flask_cors import CORS
 from SplitsData import get_table_data
@@ -21,15 +22,26 @@ def index():
 
 @app.route('/api/splits/', methods=['GET'])
 def splits_data():
-    splitsio_you_id  = request.args.get('you_splitsio', '')
-    splitsio_them_id = request.args.get('them_splitsio', '')
+    splitsio_id_you  = request.args.get('you_splitsio', '')
+    splitsio_id_them = request.args.get('them_splitsio', '')
+    rawdata_you  = request.args.get('you_rawdata', '')
+    rawdata_them = request.args.get('them_rawdata', '')
     logger.info(request.args)
 
-    you_base_df = parse_splits_io(splitsio_you_id)
-    them_base_df = parse_splits_io(splitsio_them_id)
+
+    if rawdata_you != '':
+        you_base_df  = parse_raw_data(rawdata_you)
+    else:
+        you_base_df  = parse_splits_io(splitsio_id_you)
+
+    if rawdata_them != '':
+        them_base_df  = parse_raw_data(rawdata_them)
+    else:
+        them_base_df  = parse_splits_io(splitsio_id_them)
+
 
     if you_base_df is None:
-        return {'error': f"Invalid splits.io id '{splitsio_you_id}' for YOU."}
-    if them_base_df is None and splitsio_them_id != '':
-        return {'error': f"Invalid splits.io id '{splitsio_them_id}' for THEM."}
+        return {'error': f"Invalid splits.io id '{splitsio_id_you}' for YOU."}
+    if them_base_df is None and splitsio_id_them != '':
+        return {'error': f"Invalid splits.io id '{splitsio_id_them}' for THEM."}
     return get_table_data(you_base_df, them_base_df)

@@ -9,10 +9,12 @@ class SplitsForm extends React.Component {
         super(props);
         this.state = {
             you: {
-                splitsio: ''
+                splitsio: '',
+                rawdata: ''
             },
             them: {
-                splitsio: ''
+                splitsio: '',
+                rawdata: ''
             }
         }
         console.log(this.state);
@@ -26,24 +28,25 @@ class SplitsForm extends React.Component {
         width: 100%;
     `
     handleYouChange(event) {
-        this.setState({you: {[event.target.name]: event.target.value}})
+        this.setState({ you:  {...this.state['you'],  [event.target.name]: event.target.value } })
     }
     handleThemChange(event) {
-        this.setState({them: {[event.target.name]: event.target.value}})
+        this.setState({ them: {...this.state['them'], [event.target.name]: event.target.value } })
     }
 
     handleFormSubmit(event) {
-        this.props.makeRequest({...this.state})
+        console.log(this.state)
+        this.props.makeRequest({ ...this.state })
     }
 
 
 
     render() {
         return <this.SplitsFormDiv >
-   
-                <SplitInput title='You' handleChange={this.handleYouChange} />
-                <SplitInput title='Them' handleChange={this.handleThemChange} />
-                <button onClick={this.handleFormSubmit}>
+
+            <SplitInput title='You' handleChange={this.handleYouChange} />
+            <SplitInput title='Them' handleChange={this.handleThemChange} />
+            <button onClick={this.handleFormSubmit}>
                 Compare!
                 </button>
         </this.SplitsFormDiv >

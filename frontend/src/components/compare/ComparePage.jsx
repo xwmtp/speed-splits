@@ -28,7 +28,9 @@ class ComparePage extends React.Component {
     `;
 
     requestSplitsData(formData) {
-        const url = `${process.env.REACT_APP_BACKEND_URL}/splits?you_splitsio=${formData['you']['splitsio']}&them_splitsio=${formData['them']['splitsio']}`
+        const url = encodeURI(`${process.env.REACT_APP_BACKEND_URL}/splits?` +
+            `you_splitsio=${formData['you']['splitsio']}&them_splitsio=${formData['them']['splitsio']}&` +
+            `you_rawdata=${formData['you']['rawdata']}&them_rawdata=${formData['them']['rawdata']}`)
         console.log(formData)
         console.log(url)
         fetch(url, {
