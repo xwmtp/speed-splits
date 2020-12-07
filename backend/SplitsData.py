@@ -20,11 +20,11 @@ def build_you_df(you_df):
 
 def build_you_vs_them_df(you_df, them_df):
     vs_df = pd.DataFrame()
-    you_them_df = pd.concat([you_df.add_suffix('_you'), them_df.add_suffix('_them')], axis=1)
+    you_them_df = pd.concat([you_df.add_suffix('_you'), them_df.add_suffix('_them')], axis=1, join='inner')
     vs_df['gold_vs_gold'] = _get_col_vs_col(you_them_df, 'gold_you', 'gold_them')
     vs_df['pb_vs_pb'] = _get_col_vs_col(you_them_df, 'duration_you', 'duration_them')
     vs_df['gold_vs_pb'] = _get_col_vs_col(you_them_df, 'gold_you', 'duration_them')
-    you_vs_them_df = pd.concat([you_df.add_suffix('_you'), vs_df, them_df.add_suffix('_them')], axis=1)
+    you_vs_them_df = pd.concat([you_df.add_suffix('_you'), vs_df, them_df.add_suffix('_them')], axis=1, join='inner')
     for col in ['pb_gold', 'timesave']:
         you_vs_them_df = you_vs_them_df.drop(col + '_you',  axis=1)
         you_vs_them_df = you_vs_them_df.drop(col + '_them', axis=1)
@@ -92,5 +92,4 @@ def df_to_json(df, type, decimals=3):
                 'columns' : list(df.columns),
                 'data' : df.to_dict(orient='records')
     }}
-    print(data)
     return json.dumps(data)

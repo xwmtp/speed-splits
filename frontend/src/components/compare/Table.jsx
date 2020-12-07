@@ -31,7 +31,7 @@ class Table extends React.Component {
 
     getRows() {
         const createCell = (columnInfo, rowData, i) => {
-            const cellContent = columnInfo['colType'] != 'empty' ? rowData[columnInfo['name']] : ''
+            const cellContent = columnInfo['colType'] !== 'empty' ? rowData[columnInfo['name']] : ''
             return <td key={`${i}_${columnInfo['name']}`} className={columnInfo['class']}>
                 {cellContent}
             </td>
