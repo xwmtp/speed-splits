@@ -21,6 +21,7 @@ def parse_raw_data(data_string):
     if not pb_golds:
         return
     df = pd.DataFrame({'name': split_names, 'duration': pb_golds[0], 'gold': pb_golds[1]})
+    df = df.replace(0, np.nan)
     return df
 
 
@@ -48,16 +49,17 @@ def get_pb_and_gold_columns(columns):
     candidate_columns = [col for col in columns if all(is_timestamp(c) for c in col)]
     candidate_columns = [[timestamp_to_milliseconds(ts) for ts in col] for col in candidate_columns]
     sorted_columns = sorted(candidate_columns, key = lambda col: sum(col))
+    print(sorted_columns)
     try:
         golds = sorted_columns[0]
         pbs = sorted_columns[1]
         return pbs, golds
-    except KeyError:
+    except IndexError:
         return
 
 
 def is_timestamp(str):
-    if str.isdigit():
+    if str.isdigit() or str == '' or str == '-':
         return True
     match = re.match(r"(\d\d:)?\d?\d:\d?\d(\.\d+)", str)
     if match:
@@ -66,6 +68,8 @@ def is_timestamp(str):
 
 
 def timestamp_to_milliseconds(timestamp):
+    if timestamp == '' or timestamp == '-':
+        return 0
     if timestamp.isdigit():
         return int(timestamp)
     if len(timestamp.split(':')) < 3:
