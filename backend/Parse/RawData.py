@@ -16,6 +16,7 @@ def parse_raw_data(data_string):
     if not delimiter:
         return
     columns = get_columns([l.split(delimiter) for l in lines])
+    print(columns)
     pb_golds = get_pb_and_gold_columns(columns)
     split_names = get_split_names_column(columns)
     if not pb_golds:

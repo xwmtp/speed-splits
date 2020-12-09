@@ -48,7 +48,6 @@ def _get_col_vs_col(you_them_df, you_col, them_col):
     return pd.Series(you_vs_col) - pd.Series(them_vs_col)
 
 def _add_time_save_columns(df):
-    df = _fix_durations_shorter_than_gold(df)
     df['pb_gold'] = _get_pb_golds(df)
     df = _add_time_save(df)
     return df
