@@ -22,13 +22,13 @@ class Duration:
             decimals = int(round(total_seconds_and_decimals % 1, magnitude) * 10 ** (magnitude))
             return self.time_to_string(hours, minutes, seconds, decimals, magnitude, self.negative)
         else:
-            return '-'
+            return ''
 
     def __str__(self):
         if not self.nan:
             return self.time_to_string(self.hours, self.minutes, self.seconds, self.milliseconds, 3, self.negative)
         else:
-            return '-'
+            return ''
 
     def time_to_string(self, hours, minutes, seconds, decimals, magnitude, negative=False):
         if negative and (hours != 0 or minutes != 0 or seconds != 0 or decimals != 0):
@@ -36,7 +36,9 @@ class Duration:
         else:
             sign = ''
         f_hours = f'{hours}:' if hours > 0 else ''
-        f_minutes = f'0{self.minutes}' if minutes < 10 and hours > 0 else minutes
-        f_seconds = f'0{self.seconds}' if seconds < 10 else seconds
+        f_minutes = f'{minutes}:' if hours > 0 or minutes > 0 else ''
+        if minutes < 10 and f_hours != '':
+            f_minutes = f'0{f_minutes}'
+        f_seconds = f'0{seconds}' if seconds < 10 and f_minutes != '' else seconds
         f_decimals = f"{'0' * (magnitude - len(str(decimals)))}{decimals}"
-        return f"{sign}{f_hours}{f_minutes}:{f_seconds}.{f_decimals}"
+        return f"{sign}{f_hours}{f_minutes}{f_seconds}.{f_decimals}"
