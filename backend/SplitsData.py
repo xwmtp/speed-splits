@@ -78,17 +78,29 @@ def _add_time_save(df):
 
 def cells_to_strings(df, decimals=3):
     print_df = df.copy()
-    numeric_cols = df.select_dtypes(include=[np.number]).columns
-    for col in numeric_cols:
+    for col in get_numeric_cols(df):
         print_df[col] = print_df[col].apply(lambda ms: Duration(ms).to_string_rounded(decimals))
     return print_df
 
+def get_total_row(df):
+    total_row = {}
+    for col in df.columns:
+        if col in get_numeric_cols(df):
+            total_row[col] = sum(df.fillna(0)[col])
+        else:
+            total_row[col] = 'Total'
+    return total_row
+
+def get_numeric_cols(df):
+    return df.select_dtypes(include=[np.number]).columns
+
 
 def df_to_json(df, type, decimals=3):
-    df = cells_to_strings(df, decimals)
+    df = df.append(get_total_row(df), ignore_index=True)
+    str_df = cells_to_strings(df, decimals)
     data = {'splits_data' : {
                 'type' : type,
                 'columns' : list(df.columns),
-                'data' : df.to_dict(orient='records')
+                'data' : str_df.to_dict(orient='records')
     }}
     return json.dumps(data)
