@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
         --bg-color: rgb(38,38,38);
         --sidebar-color: rgb(30, 30, 30);
         --yellow: rgb(237, 227, 83);
+        --violet: rgb(130, 109, 191);
     }
     
     * {

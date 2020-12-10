@@ -7,7 +7,7 @@ const HeaderDiv = styled.div`
     display: flex;
     align-items: center;
     padding: 15px;
-    background: rgb(130, 109, 191);
+    background: var(--violet);
 `
 
 function Header() {

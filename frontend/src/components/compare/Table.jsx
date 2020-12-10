@@ -17,7 +17,7 @@ class Table extends React.Component {
                 <h2>{headerInfo['header']}</h2>
             </th>
         }
-        return <tr>{this.props.data['dataHeaderInfo'].map(createHeader)}</tr>
+        return <tr className='data-header'>{this.props.data['dataHeaderInfo'].map(createHeader)}</tr>
     }
 
     getColumnHeader() {
@@ -26,7 +26,7 @@ class Table extends React.Component {
                 {columnInfo['display']}
             </th>
         }
-        return <tr>{this.props.data['columnInfo'].map(createHeader)}</tr>
+        return <tr className='column-header'>{this.props.data['columnInfo'].map(createHeader)}</tr>
     }
 
     getRows() {
@@ -51,9 +51,10 @@ class Table extends React.Component {
             <table>
                 <thead>
                     {this.getDataHeader()}
+                    {this.getColumnHeader()}
                 </thead>
                 <tbody>
-                    {this.getColumnHeader()}
+                    
                     {this.getRows()}
                 </tbody>
             </table>

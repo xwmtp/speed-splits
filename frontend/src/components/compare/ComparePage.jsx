@@ -78,13 +78,27 @@ const TableDiv = styled.div`
     flex-direction: column;
 
     table {  
-        border: none;
         border-spacing: 0px;
+        border-collapse: collapse;
         flex-shrink: 0;
-        tr:nth-child(even) {background-color: rgb(45,45,45)};
+        thead {
+            .column-header {
+                background-color: var(--violet);
+                font-weight: bold;
+            };
+        }
+        tbody {
+            /*tr:nth-child(even) {background-color: rgb(45,45,45)};*/
+            tr:last-child {font-weight: bold;}
+
+            tr {
+                border-top: 1px solid rgb(55, 55, 55);
+            }
+        }
+
+
         td, th {
             padding: 8px 15px;
-            border: none;
             vertical-align: center;
         }
         th {
@@ -103,6 +117,7 @@ const TableDiv = styled.div`
         .no-background {
             background-color: var(--bg-color);
             padding: 8px 10px;
+            border-top: 1px solid var(--bg-color);
         }
     }
     `;
@@ -141,8 +156,8 @@ class TableBlock extends React.Component {
                 { name: 'gold_you', display: 'gold', class: 'align-right split-colors' },
                 { name: 'empty_1', type: 'empty', class: 'no-background' },
                 { name: 'gold_vs_gold', display: 'gold/gold', class: 'align-right split-colors' },
-                { name: 'pb_vs_pb', display: 'pb/pb', class: 'align-right split-colors' },
-                { name: 'gold_vs_pb', display: 'gold/pb', class: 'align-right split-colors' },
+                { name: 'pb_vs_pb', display: 'PB/PB', class: 'align-right split-colors' },
+                { name: 'gold_vs_pb', display: 'gold/PB', class: 'align-right split-colors' },
                 { name: 'empty_2', type: 'empty', class: 'no-background' },
                 { name: 'duration_them', display: 'PB', class: 'align-right split-colors' },
                 { name: 'gold_them', display: 'gold', class: 'align-right split-colors' },

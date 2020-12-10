@@ -88,7 +88,7 @@ def get_total_row(df):
         if col in get_numeric_cols(df):
             total_row[col] = sum(df.fillna(0)[col])
         else:
-            total_row[col] = 'Total'
+            total_row[col] = ''
     return total_row
 
 def get_numeric_cols(df):
