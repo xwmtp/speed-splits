@@ -9,13 +9,15 @@ logger = logging.getLogger('splt.parse.rawdata')
 
 
 def parse_raw_data(data_string):
-    lines = data_string.splitlines()
+    lines = [line for line in data_string.splitlines() if line != '']
     if len(lines) == 0:
         return
     delimiter = parse_delimiter(lines[0])
     if not delimiter:
         return
     columns = get_columns([l.split(delimiter) for l in lines])
+    if len(columns) == 0 or not (all(len(c) == len(columns[0]) for c in columns)):
+        return
     print(columns)
     pb_golds = get_pb_and_gold_columns(columns)
     split_names = get_split_names_column(columns)
@@ -49,14 +51,15 @@ def get_split_names_column(columns):
 def get_pb_and_gold_columns(columns):
     candidate_columns = [col for col in columns if all(is_timestamp(c) for c in col)]
     candidate_columns = [[timestamp_to_milliseconds(ts) for ts in col] for col in candidate_columns]
-    sorted_columns = sorted(candidate_columns, key = lambda col: sum(col))
-    print(sorted_columns)
-    try:
-        golds = sorted_columns[0]
-        pbs = sorted_columns[1]
-        return pbs, golds
-    except IndexError:
+    if len(candidate_columns) >= 3:
+        pbs = candidate_columns[1]
+        golds = candidate_columns[2]
+    elif len(candidate_columns) == 2:
+        pbs = candidate_columns[0]
+        golds = candidate_columns[1]
+    else:
         return
+    return pbs, golds
 
 
 def is_timestamp(str):
