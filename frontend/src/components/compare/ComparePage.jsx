@@ -28,26 +28,22 @@ class ComparePage extends React.Component {
     `;
 
     requestSplitsData(formData) {
-        const url = encodeURI(`${process.env.REACT_APP_BACKEND_URL}/splits?` +
-            `you_splitsio=${formData['you']['splitsio']}&them_splitsio=${formData['them']['splitsio']}&` +
-            `you_rawdata=${formData['you']['rawdata']}&them_rawdata=${formData['them']['rawdata']}`)
-        console.log(formData)
-        console.log(url)
-        fetch(url, {
-            method: "get",
-            mode: "cors"
+        fetch(encodeURI(`${process.env.REACT_APP_BACKEND_URL}/splits/form/`), {
+            method: "post",
+            mode: "cors",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData),
+        }).then(r => {
+            if (r.status / 100 !== 2) {
+                throw Error(r.status);
+            }
+            return r.json();
         })
-            .then(r => {
-                if (r.status / 100 !== 2) {
-                    throw Error();
-                }
-                console.log("Got json")
-                return r.json()
-            })
             .then(splitsData => {
                 this.setState({ splitsData: splitsData });
-                console.log("Got response:");
-                console.log(this.state);
             })
     }
 

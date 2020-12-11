@@ -12,7 +12,6 @@ logger = logging.getLogger('splt.api')
 app = Flask(__name__)
 CORS(app)
 
-
 if __name__ == '__main__':
     app.run(debug=True)
 
@@ -21,27 +20,49 @@ def index():
     return 'Welcome to the SplitsCompare API.'
 
 @app.route('/api/splits/', methods=['GET'])
-def splits_data():
-    splitsio_id_you  = request.args.get('you_splitsio', '')
+def splitsio_endpoint():
+    splitsio_id_you = request.args.get('you_splitsio', '')
     splitsio_id_them = request.args.get('them_splitsio', '')
-    rawdata_you  = request.args.get('you_rawdata', '')
-    rawdata_them = request.args.get('them_rawdata', '')
-    logger.info(request.args)
-
-
-    if rawdata_you != '':
-        you_base_df  = parse_raw_data(rawdata_you)
-    else:
-        you_base_df  = parse_splits_io(splitsio_id_you)
-
-    if rawdata_them != '':
-        them_base_df  = parse_raw_data(rawdata_them)
-    else:
-        them_base_df  = parse_splits_io(splitsio_id_them)
-
+    you_base_df = parse_splits_io(splitsio_id_you)
+    them_base_df = parse_splits_io(splitsio_id_them)
 
     if you_base_df is None:
         return {'error': f"Invalid splits.io id '{splitsio_id_you}' for YOU."}
     if them_base_df is None and splitsio_id_them != '':
         return {'error': f"Invalid splits.io id '{splitsio_id_them}' for THEM."}
+
     return get_table_data(you_base_df, them_base_df)
+
+@app.route('/api/splits/form/', methods=['POST'])
+def splits_form_endpoint():
+    data = request.json
+    splitsio_id_you = data['you']['splitsio']
+    splitsio_id_them = data['them']['splitsio']
+    rawdata_you  = data['you']['rawdata']
+    rawdata_them = data['them']['rawdata']
+
+    print(splitsio_id_you, rawdata_you)
+    if rawdata_you == '':
+        you_base_df = parse_splits_io(splitsio_id_you)
+    else:
+        print(repr(rawdata_you))
+        you_base_df  = parse_raw_data(rawdata_you)
+        print(you_base_df)
+
+    if rawdata_them == '':
+        them_base_df = parse_splits_io(splitsio_id_them)
+    else:
+        them_base_df = parse_raw_data(rawdata_them)
+
+    if you_base_df is None:
+        return {'error': f"Error while parsing 'YOU' data (required)."}
+    if them_base_df is None and (splitsio_id_them != '' and rawdata_them != ''):
+        return {'error': f"Error while parsing 'THEM' data."}
+
+    table_data = get_table_data(you_base_df, them_base_df)
+    if table_data is None:
+        return {'error': f"Error while constructing table."}
+    else:
+        return table_data
+
+

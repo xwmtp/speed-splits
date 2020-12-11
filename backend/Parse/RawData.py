@@ -11,17 +11,20 @@ logger = logging.getLogger('splt.parse.rawdata')
 def parse_raw_data(data_string):
     lines = [line for line in data_string.splitlines() if line != '']
     if len(lines) == 0:
+        logger.info("Data contains zero lines.")
         return
     delimiter = parse_delimiter(lines[0])
     if not delimiter:
+        logger.info("Could not find valid delimiter.")
         return
     columns = get_columns([l.split(delimiter) for l in lines])
     if len(columns) == 0 or not (all(len(c) == len(columns[0]) for c in columns)):
+        logger.info("Columns are not all of same non-zero length.")
         return
-    print(columns)
     pb_golds = get_pb_and_gold_columns(columns)
     split_names = get_split_names_column(columns)
     if not pb_golds:
+        logger.info("Could not find pb and gold columns.")
         return
     df = pd.DataFrame({'name': split_names, 'duration': pb_golds[0], 'gold': pb_golds[1]})
     df = df.replace(0, np.nan)
@@ -65,7 +68,7 @@ def get_pb_and_gold_columns(columns):
 def is_timestamp(str):
     if str.isdigit() or str == '' or str == '-':
         return True
-    match = re.match(r"(\d\d:)?\d?\d:\d?\d(\.\d+)", str)
+    match = re.match(r"(\d?\d:)?\d?\d:\d?\d(\.\d+)?$", str)
     if match:
         return True
     return False
