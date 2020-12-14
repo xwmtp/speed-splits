@@ -24,14 +24,19 @@ class SplitsForm extends React.Component {
     }
 
     SplitsFormDiv = styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         height: 100%;
         width: 100%;
     `
     handleYouChange(event) {
-        this.setState({ you:  {...this.state['you'],  [event.target.name]: event.target.value } })
+        this.setState({ you: { ...this.state['you'], [event.target.name]: event.target.value } })
     }
+
     handleThemChange(event) {
-        this.setState({ them: {...this.state['them'], [event.target.name]: event.target.value } })
+        this.setState({ them: { ...this.state['them'], [event.target.name]: event.target.value } })
     }
 
     handleFormSubmit(event) {
@@ -40,10 +45,8 @@ class SplitsForm extends React.Component {
     }
 
 
-
     render() {
         return <this.SplitsFormDiv >
-
             <SplitInput title='You' handleChange={this.handleYouChange} />
             <SplitInput title='Them' handleChange={this.handleThemChange} />
             <button onClick={this.handleFormSubmit}>

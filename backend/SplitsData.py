@@ -16,7 +16,8 @@ def get_table_data(you_base_df, them_base_df=None):
     return df_to_json(vs_df, 'vs_data', decimals=1)
 
 def build_you_df(you_df):
-    return you_df.drop(['pb_gold'], axis=1)
+    you_df = you_df.drop(['pb_gold'], axis=1)
+    return you_df.add_suffix('_you')
 
 def build_you_vs_them_df(you_df, them_df):
     vs_df = pd.DataFrame()

@@ -13,6 +13,7 @@ const SplitInputDiv = styled.div`
     label {
         display: flex;
         flex-direction: column;
+        align-items: center;
         margin: 10px 0px;
     }
     textarea {
@@ -27,7 +28,7 @@ function SplitInput(props) {
             <h2>{props.title}</h2>
             <label>
                 {'Splits.io id:'}
-                <input type="text" name='splitsio' onChange={props.handleChange} />
+                <input type="text" name='splitsio' onChange={props.handleChange} maxLength={25}/>
             </label>
             or
             <label>

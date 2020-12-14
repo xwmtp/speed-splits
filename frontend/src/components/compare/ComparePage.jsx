@@ -2,12 +2,13 @@ import styled from "styled-components";
 import React from "react";
 import Sidebar from '../sidebar/Sidebar.jsx'
 import Table from "./Table.jsx";
+import Loader from "./LoadingSpinner"
 
 class ComparePage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { splitsData: {} }
+        this.state = { loading: false, splitsData: {} }
         this.requestSplitsData = this.requestSplitsData.bind(this);
     }
 
@@ -28,6 +29,8 @@ class ComparePage extends React.Component {
     `;
 
     requestSplitsData(formData) {
+        this.setState({loading: true})
+        console.log(formData)
         fetch(encodeURI(`${process.env.REACT_APP_BACKEND_URL}/splits/form/`), {
             method: "post",
             mode: "cors",
@@ -38,22 +41,24 @@ class ComparePage extends React.Component {
             body: JSON.stringify(formData),
         }).then(r => {
             if (r.status / 100 !== 2) {
+                this.setState({loading: false})
                 throw Error(r.status);
             }
             return r.json();
         })
             .then(splitsData => {
-                this.setState({ splitsData: splitsData });
+                this.setState({ loading: false, splitsData: splitsData });
             })
     }
 
 
     render() {
+        const pageContent = this.state.loading? <Loader/> : <TableBlock data={this.state.splitsData} />
         return (
             <this.PageDiv id='compare-page'>
                 <Sidebar makeRequest={this.requestSplitsData} />
                 <this.CompareDiv id='compare-div'>
-                    <TableBlock data={this.state.splitsData} />
+                    {pageContent}
                 </this.CompareDiv>
             </this.PageDiv>
         );
@@ -130,10 +135,10 @@ class TableBlock extends React.Component {
                 { header: 'you', span: 4 }
             ],
             columnInfo: [
-                { name: 'name', display: 'split', class: 'align-right' },
-                { name: 'duration', display: 'PB', class: 'align-right' },
-                { name: 'gold', display: 'gold', class: 'align-right' },
-                { name: 'timesave', display: 'timesave', class: 'align-right' },
+                { name: 'name_you', display: 'split', class: 'align-right' },
+                { name: 'duration_you', display: 'PB', class: 'align-right' },
+                { name: 'gold_you', display: 'gold', class: 'align-right' },
+                { name: 'timesave_you', display: 'timesave', class: 'align-right' },
             ],
             data: data['splits_data']['data']
         }
@@ -176,7 +181,6 @@ class TableBlock extends React.Component {
             }
             if (data['splits_data']['type'] === 'vs_data') {
                 displayInfo = this.addDisplayInfoVSData(data);
-                console.log(displayInfo)
             }
             pageContent = (
                 <TableDiv id='table-block'>
