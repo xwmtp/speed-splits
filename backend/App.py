@@ -41,13 +41,10 @@ def splits_form_endpoint():
     rawdata_you  = data['you']['rawdata']
     rawdata_them = data['them']['rawdata']
 
-    print(splitsio_id_you, rawdata_you)
     if rawdata_you == '':
         you_base_df = parse_splits_io(splitsio_id_you)
     else:
-        print(repr(rawdata_you))
         you_base_df  = parse_raw_data(rawdata_you)
-        print(you_base_df)
 
     if rawdata_them == '':
         them_base_df = parse_splits_io(splitsio_id_them)

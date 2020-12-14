@@ -20,11 +20,11 @@ def build_you_df(you_df):
 
 def build_you_vs_them_df(you_df, them_df):
     vs_df = pd.DataFrame()
-    you_them_df = pd.concat([you_df.add_suffix('_you'), them_df.add_suffix('_them')], axis=1, join='inner')
+    you_them_df = pd.concat([you_df.add_suffix('_you'), them_df.add_suffix('_them')], axis=1)
     vs_df['gold_vs_gold'] = _get_col_vs_col(you_them_df, 'gold_you', 'gold_them')
     vs_df['pb_vs_pb'] = _get_col_vs_col(you_them_df, 'duration_you', 'duration_them')
     vs_df['gold_vs_pb'] = _get_col_vs_col(you_them_df, 'gold_you', 'duration_them')
-    you_vs_them_df = pd.concat([you_df.add_suffix('_you'), vs_df, them_df.add_suffix('_them')], axis=1, join='inner')
+    you_vs_them_df = pd.concat([you_df.add_suffix('_you'), vs_df, them_df.add_suffix('_them')], axis=1)
     for col in ['pb_gold', 'timesave']:
         you_vs_them_df = you_vs_them_df.drop(col + '_you',  axis=1)
         you_vs_them_df = you_vs_them_df.drop(col + '_them', axis=1)
@@ -97,10 +97,14 @@ def get_numeric_cols(df):
 
 def df_to_json(df, type, decimals=3):
     df = df.append(get_total_row(df), ignore_index=True)
-    str_df = cells_to_strings(df, decimals)
+    str_df = df.copy()
+    str_df[str_df['name_you'] != ''] = cells_to_strings(df[df['name_you'] != ''], decimals)
+    str_df[str_df['name_you'] == ''] = cells_to_strings(df[df['name_you'] == ''], 0)
+    str_df = str_df.fillna('')
     data = {'splits_data' : {
                 'type' : type,
-                'columns' : list(df.columns),
+                'columns' : list(str_df.columns),
                 'data' : str_df.to_dict(orient='records')
     }}
+    print(json.dumps(data))
     return json.dumps(data)

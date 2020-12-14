@@ -40,5 +40,5 @@ class Duration:
         if minutes < 10 and f_hours != '':
             f_minutes = f'0{f_minutes}'
         f_seconds = f'0{seconds}' if seconds < 10 and f_minutes != '' else seconds
-        f_decimals = f"{'0' * (magnitude - len(str(decimals)))}{decimals}"
-        return f"{sign}{f_hours}{f_minutes}{f_seconds}.{f_decimals}"
+        f_decimals = f".{'0' * (magnitude - len(str(decimals)))}{decimals}" if magnitude > 0 else ''
+        return f"{sign}{f_hours}{f_minutes}{f_seconds}{f_decimals}"
