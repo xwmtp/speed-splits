@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 /* https://projects.lukehaas.me/css-loaders/ */
 const LoaderDiv = styled.div`
+    width: 1em;
+    height:4em;
     .loader,
     .loader:before,
     .loader:after {
@@ -15,7 +17,7 @@ const LoaderDiv = styled.div`
     .loader {
         color: var(--yellow);
         text-indent: -9999em;
-        margin: 88px auto;
+        margin: 88px 88px;
         position: relative;
         font-size: 11px;
         -webkit-transform: translateZ(0);
@@ -66,7 +68,7 @@ const LoaderDiv = styled.div`
 
 function Loader() {
     return (
-        <LoaderDiv >
+        <LoaderDiv classname='loader-div'>
             <div className='loader'>Loading...</div>
         </LoaderDiv >
     );

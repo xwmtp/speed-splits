@@ -16,8 +16,7 @@ class Sidebar extends React.Component {
     SidebarDiv = styled.div`
         height: 100%;
         min-height: 100%;
-        width: 300px;
-        max-width: 30vw;
+        width: 350px;
         background: var(--sidebar-color);
         display: flex;
         flex-direction: column;

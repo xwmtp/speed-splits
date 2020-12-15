@@ -23,7 +23,9 @@ class ComparePage extends React.Component {
     `;
 
     CompareDiv = styled.div`
-        padding: 20px;
+        margin: 20px;
+        height: 100%;
+        width: 100%;
         display: flex;
         flex-direction: row;
     `;
@@ -53,17 +55,16 @@ class ComparePage extends React.Component {
 
 
     render() {
-        const pageContent = this.state.loading? <Loader/> : <TableBlock data={this.state.splitsData} />
+        const compareContent = this.state.loading? <Loader/> : <TableBlock data={this.state.splitsData} />
         return (
             <this.PageDiv id='compare-page'>
                 <Sidebar makeRequest={this.requestSplitsData} />
                 <this.CompareDiv id='compare-div'>
-                    {pageContent}
+                    {compareContent}
                 </this.CompareDiv>
             </this.PageDiv>
         );
     }
-
 }
 
 export default ComparePage;
@@ -89,7 +90,6 @@ const TableDiv = styled.div`
             };
         }
         tbody {
-            /*tr:nth-child(even) {background-color: rgb(45,45,45)};*/
             tr:last-child {font-weight: bold;}
 
             tr {

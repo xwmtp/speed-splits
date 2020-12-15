@@ -1,13 +1,18 @@
+import styled from "styled-components";
 import './components/Header.jsx'
 import Header from './components/Header.jsx';
 import ComparePage from './components/compare/ComparePage.jsx'
 
+const AppDiv = styled.div`
+  height: 100%;
+`
+
 function App() {
   return (
-    <div className="App">
-    <Header/>
-    <ComparePage/>
-    </div>
+    <AppDiv id="app">
+      <Header />
+      <ComparePage />
+    </AppDiv>
   );
 }
 

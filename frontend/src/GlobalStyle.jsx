@@ -27,6 +27,10 @@ const GlobalStyle = createGlobalStyle`
         font-family: "Nunito", sans-serif;
   }
 
+  #root {
+      height: 100%;
+  }
+
 `;
 
 export default GlobalStyle;
