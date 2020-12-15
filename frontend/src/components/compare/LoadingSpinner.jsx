@@ -3,18 +3,16 @@ import styled from "styled-components";
 
 /* https://projects.lukehaas.me/css-loaders/ */
 const LoaderDiv = styled.div`
-    width: 1em;
-    height:4em;
-    .loader,
-    .loader:before,
-    .loader:after {
+    &,
+    &:before,
+    &:after {
         background: var(--yellow);
         -webkit-animation: load1 1s infinite ease-in-out;
         animation: load1 1s infinite ease-in-out;
         width: 1em;
         height: 4em;
     }
-    .loader {
+    & {
         color: var(--yellow);
         text-indent: -9999em;
         margin: 88px 88px;
@@ -26,18 +24,18 @@ const LoaderDiv = styled.div`
         -webkit-animation-delay: -0.16s;
         animation-delay: -0.16s;
     }
-    .loader:before,
-    .loader:after {
+    &:before,
+    &:after {
         position: absolute;
         top: 0;
         content: '';
     }
-    .loader:before {
+    &:before {
         left: -1.5em;
         -webkit-animation-delay: -0.32s;
         animation-delay: -0.32s;
     }
-    .loader:after {
+    &:after {
         left: 1.5em;
     }
     @-webkit-keyframes load1 {
@@ -68,9 +66,7 @@ const LoaderDiv = styled.div`
 
 function Loader() {
     return (
-        <LoaderDiv classname='loader-div'>
-            <div className='loader'>Loading...</div>
-        </LoaderDiv >
+            <LoaderDiv className='loader'>Loading...</LoaderDiv>
     );
 }
 

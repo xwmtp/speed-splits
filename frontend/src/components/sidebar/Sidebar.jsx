@@ -2,15 +2,10 @@ import styled from "styled-components";
 import React from "react";
 import SplitsForm from "./SplitsForm";
 
-
-
 class Sidebar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-
-        }
     }
 
     SidebarDiv = styled.div`
@@ -24,10 +19,9 @@ class Sidebar extends React.Component {
         padding: 10px;
 `
 
-
     render() {
         return <this.SidebarDiv id='sidebar' >
-            <SplitsForm makeRequest={this.props.makeRequest} id='splits-form'/>
+            <SplitsForm makeRequest={this.props.makeRequest} id='splits-form' />
         </this.SidebarDiv >
     }
 }
