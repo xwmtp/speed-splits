@@ -7,11 +7,16 @@ logger = logging.getLogger('splt.parse.splitsio')
 
 def parse_splits_io(id):
     splits_json = make_request(f'https://splits.io/api/v4/runs/{transform_id(id)}')
-    if splits_json:
-        return build_base_df(splits_json)
+    try:
+        if splits_json:
+            return {'df' : build_base_df(splits_json)}
+        else:
+            return {'error': f"Unable to load splits with id '{id}' from Splits.io"}
+    except Exception:
+        return {'error' : f"Error while parsing Splits.io data for id '{id}'"}
 
 def transform_id(id):
-    new_id = id
+    new_id = id.strip()
     for pattern in ['https://', 'www.', 'splits.io/']:
         new_id = new_id.replace(pattern, '')
     return new_id

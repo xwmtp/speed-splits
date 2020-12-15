@@ -36,29 +36,35 @@ def splitsio_endpoint():
 @app.route('/api/splits/form/', methods=['POST'])
 def splits_form_endpoint():
     data = request.json
-    splitsio_id_you = data['you']['splitsio']
-    splitsio_id_them = data['them']['splitsio']
+    splitsio_id_you = data['you']['splitsio'].strip()
+    splitsio_id_them = data['them']['splitsio'].strip()
     rawdata_you  = data['you']['rawdata']
     rawdata_them = data['them']['rawdata']
 
-    if rawdata_you == '':
-        you_base_df = parse_splits_io(splitsio_id_you)
-    else:
-        you_base_df  = parse_raw_data(rawdata_you)
+    you_data = {}
+    them_data = {}
 
-    if rawdata_them == '':
-        them_base_df = parse_splits_io(splitsio_id_them)
-    else:
-        them_base_df = parse_raw_data(rawdata_them)
+    if splitsio_id_you != '':
+        you_data = parse_splits_io(splitsio_id_you)
+    if rawdata_you != '':
+        you_data  = parse_raw_data(rawdata_you)
 
-    if you_base_df is None:
-        return {'error': f"Error while parsing 'YOU' data (required)."}
-    if them_base_df is None and (splitsio_id_them != '' and rawdata_them != ''):
-        return {'error': f"Error while parsing 'THEM' data."}
+    if splitsio_id_them != '':
+        them_data = parse_splits_io(splitsio_id_them)
+    if rawdata_them != '':
+        them_data = parse_raw_data(rawdata_them)
+
+    if 'error' in you_data:
+        return {'error' : you_data['error']  + " (for 'YOU)'."}
+    if 'error' in them_data:
+        return {'error' : them_data['error'] + " (for 'THEM')."}
+
+    you_base_df = you_data['df']
+    them_base_df = them_data['df'] if 'df' in them_data else None
 
     table_data = get_table_data(you_base_df, them_base_df)
     if table_data is None:
-        return {'error': f"Error while constructing table."}
+        return {'error': f"Error while constructing data table, please verify submitted data and see 'FAQ'."}
     else:
         return table_data
 

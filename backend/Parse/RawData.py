@@ -11,24 +11,20 @@ logger = logging.getLogger('splt.parse.rawdata')
 def parse_raw_data(data_string):
     lines = [line for line in data_string.splitlines() if line != '']
     if len(lines) == 0:
-        logger.info("Data contains zero lines.")
-        return
+        return {'error' : 'Raw splits data is empty'}
     delimiter = parse_delimiter(lines[0])
     if not delimiter:
-        logger.info("Could not find valid delimiter.")
-        return
+        return {'error' : "Couldn't detect a valid delimiter in the raw splits data. Columns should be separated by tabs, commas or semicolons"}
     columns = get_columns([l.split(delimiter) for l in lines])
     if len(columns) == 0 or not (all(len(c) == len(columns[0]) for c in columns)):
-        logger.info("Columns are not all of same non-zero length.")
-        return
+        return {'error' : "Couldn't detect all same length columns in raw splits data"}
     pb_golds = get_pb_and_gold_columns(columns)
     split_names = get_split_names_column(columns)
     if not pb_golds:
-        logger.info("Could not find pb and gold columns.")
-        return
+        return {'error' : "Couldn't detect correct columns in raw splits data. 1st column should be segment names, 2nd the segment durations, 3rd the gold durations" }
     df = pd.DataFrame({'name': split_names, 'duration': pb_golds[0], 'gold': pb_golds[1]})
     df = df.replace(0, np.nan)
-    return df
+    return {'df' : df}
 
 
 def parse_delimiter(line):
