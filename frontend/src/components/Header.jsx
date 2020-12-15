@@ -13,7 +13,7 @@ const HeaderDiv = styled.div`
 function Header() {
 
     return (
-        <HeaderDiv >
+        <HeaderDiv id='header' >
             <h1>Split Compare</h1>
         </HeaderDiv>
     );

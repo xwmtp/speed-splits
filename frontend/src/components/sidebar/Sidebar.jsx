@@ -9,8 +9,7 @@ class Sidebar extends React.Component {
     }
 
     SidebarDiv = styled.div`
-        height: 100%;
-        min-height: 100%;
+        flex-grow: 1;
         width: 350px;
         background: var(--sidebar-color);
         display: flex;

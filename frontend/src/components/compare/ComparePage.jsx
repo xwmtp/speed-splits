@@ -3,6 +3,7 @@ import React from "react";
 import Sidebar from '../sidebar/Sidebar.jsx'
 import Table from "./Table.jsx";
 import Loader from "./LoadingSpinner"
+import { isEmpty } from "../../util"
 
 class ComparePage extends React.Component {
 
@@ -14,8 +15,7 @@ class ComparePage extends React.Component {
 
     PageDiv = styled.div`
         display: flex;
-        height: 100%;
-        flex-grow: 1;       
+        flex-grow: 1;
         h2 {
             color: var(--yellow);
             text-transform: uppercase;
@@ -23,16 +23,19 @@ class ComparePage extends React.Component {
     `;
 
     CompareDiv = styled.div`
-        margin: 20px;
+        padding: 20px;
         height: 100%;
         width: 100%;
+        height: 1px solid green;
         display: flex;
         flex-direction: row;
     `;
 
     requestSplitsData(formData) {
-        this.setState({loading: true})
-        console.log(formData)
+        this.setState({ loading: true })
+        if (Object.values(formData).every(x => isEmpty(x))) {
+            return this.setState({ loading: false, splitsData: {'error': "Please fill in a Splits.io id or splits data for 'YOU', and optionally for 'THEM'."} })
+        }
         fetch(encodeURI(`${process.env.REACT_APP_BACKEND_URL}/splits/form/`), {
             method: "post",
             mode: "cors",
@@ -43,7 +46,7 @@ class ComparePage extends React.Component {
             body: JSON.stringify(formData),
         }).then(r => {
             if (r.status / 100 !== 2) {
-                this.setState({loading: false})
+                this.setState({ loading: false })
                 throw Error(r.status);
             }
             return r.json();
@@ -55,7 +58,7 @@ class ComparePage extends React.Component {
 
 
     render() {
-        const compareContent = this.state.loading? <Loader/> : <TableBlock data={this.state.splitsData} />
+        const compareContent = this.state.loading ? <Loader /> : <TableBlock data={this.state.splitsData} />
         return (
             <this.PageDiv id='compare-page'>
                 <Sidebar makeRequest={this.requestSplitsData} />
@@ -124,10 +127,6 @@ const TableDiv = styled.div`
     `;
 
 class TableBlock extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     addDisplayInfoYouData(data) {
         return {

@@ -5,6 +5,8 @@ import ComparePage from './components/compare/ComparePage.jsx'
 
 const AppDiv = styled.div`
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `
 
 function App() {
