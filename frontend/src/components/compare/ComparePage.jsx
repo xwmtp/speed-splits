@@ -29,12 +29,15 @@ class ComparePage extends React.Component {
         height: 1px solid green;
         display: flex;
         flex-direction: row;
+        p {
+            white-space: pre-line;  
+        }
     `;
 
     requestSplitsData(formData) {
         this.setState({ loading: true })
         if (Object.values(formData).every(x => isEmpty(x))) {
-            return this.setState({ loading: false, splitsData: {'error': "Please fill in a Splits.io id or splits data for 'YOU', and optionally for 'THEM'."} })
+            return this.setState({ loading: false, splitsData: { 'error': "Please fill in a Splits.io id or splits data for 'YOU', and optionally for 'THEM'." } })
         }
         fetch(encodeURI(`${process.env.REACT_APP_BACKEND_URL}/splits/form/`), {
             method: "post",
@@ -50,10 +53,13 @@ class ComparePage extends React.Component {
                 throw Error(r.status);
             }
             return r.json();
-        })
-            .then(splitsData => {
-                this.setState({ loading: false, splitsData: splitsData });
-            })
+        }).then(splitsData => {
+            this.setState({ loading: false, splitsData: splitsData });
+        }).catch(() => this.updateDate({'error' : 'Could not fetch data.'}))
+    }
+
+    updateDate(splitsData) {
+        this.setState({loading: false, splitsData: splitsData})
     }
 
 

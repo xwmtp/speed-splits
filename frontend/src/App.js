@@ -2,6 +2,8 @@ import styled from "styled-components";
 import './components/Header.jsx'
 import Header from './components/Header.jsx';
 import ComparePage from './components/compare/ComparePage.jsx'
+import FAQ from './components/FAQ.jsx'
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 const AppDiv = styled.div`
   height: 100%;
@@ -12,8 +14,13 @@ const AppDiv = styled.div`
 function App() {
   return (
     <AppDiv id="app">
-      <Header />
-      <ComparePage />
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <Route path="/" component={ComparePage} exact />
+          <Route path="/faq" component={FAQ} />
+        </Switch>
+      </BrowserRouter>
     </AppDiv>
   );
 }

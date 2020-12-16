@@ -55,7 +55,7 @@ def splits_form_endpoint():
         them_data = parse_raw_data(rawdata_them)
 
     if 'error' in you_data:
-        return {'error' : you_data['error']  + " (for 'YOU)'."}
+        return {'error' : you_data['error']  + " (for 'YOU')."}
     if 'error' in them_data:
         return {'error' : them_data['error'] + " (for 'THEM')."}
 
