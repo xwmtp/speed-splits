@@ -6,6 +6,7 @@ import json
 
 def get_table_data(you_base_df, them_base_df=None):
     you_df = _add_time_save_columns(you_base_df)
+    print(you_df)
     if them_base_df is None:
         you_df = build_you_df(you_df)
         return df_to_json(you_df, 'you_data', decimals=1)
@@ -16,6 +17,7 @@ def get_table_data(you_base_df, them_base_df=None):
     return df_to_json(vs_df, 'vs_data', decimals=1)
 
 def build_you_df(you_df):
+    you_df = _add_balanced(you_df)
     you_df = you_df.drop(['pb_gold'], axis=1)
     return you_df.add_suffix('_you')
 
@@ -53,7 +55,6 @@ def _add_time_save_columns(df):
     df = _add_time_save(df)
     return df
 
-
 def _fix_durations_shorter_than_gold(df):
     df.loc[df['duration'] < df['gold'], 'duration'] = df.loc[df['duration'] < df['gold'], 'gold']
     return df
@@ -70,12 +71,17 @@ def _get_pb_golds(df):
             prev_skipped_golds = 0
     return pd.Series(pb_gold_series)
 
-
 def _add_time_save(df):
     df['timesave'] = df['duration'] - df['pb_gold']
     df.loc[df['timesave'] < 0, 'timesave'] = 0
     return df
 
+def _add_balanced(df):
+    total_timesave = df['duration'].sum() - df['gold'].sum()
+    percs = df['gold'] / df['gold'].sum()
+    balanced = df['gold'] + percs * total_timesave
+    df['balanced'] = balanced
+    return df
 
 def cells_to_strings(df, decimals=3):
     print_df = df.copy()
@@ -95,12 +101,11 @@ def get_total_row(df):
 def get_numeric_cols(df):
     return df.select_dtypes(include=[np.number]).columns
 
-
 def df_to_json(df, type, decimals=3):
     df = df.append(get_total_row(df), ignore_index=True)
     str_df = df.copy()
     str_df[str_df['name_you'] != ''] = cells_to_strings(df[df['name_you'] != ''], decimals)
-    str_df[str_df['name_you'] == ''] = cells_to_strings(df[df['name_you'] == ''], 0)
+    str_df[str_df['name_you'] == ''] = cells_to_strings(df[df['name_you'] == ''], decimals)
     str_df = str_df.fillna('')
     data = {'splits_data' : {
                 'type' : type,

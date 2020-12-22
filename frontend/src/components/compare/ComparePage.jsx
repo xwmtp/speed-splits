@@ -137,13 +137,14 @@ class TableBlock extends React.Component {
     addDisplayInfoYouData(data) {
         return {
             dataHeaderInfo: [
-                { header: 'you', span: 4 }
+                { header: 'you', span: 5 }
             ],
             columnInfo: [
                 { name: 'name_you', display: 'split', class: 'align-right' },
                 { name: 'duration_you', display: 'PB', class: 'align-right' },
                 { name: 'gold_you', display: 'gold', class: 'align-right' },
                 { name: 'timesave_you', display: 'timesave', class: 'align-right' },
+                { name: 'balanced_you', display: 'balanced', class: 'align-right' },
             ],
             data: data['splits_data']['data']
         }

@@ -47,9 +47,9 @@ function SplitInput(props) {
                 <Title>
                     {'Raw splits:'}
                     <Tooltip text="Paste your raw splits separated by tabs, commas or semicolons.
-                                   The segment names, durations and golds are required.
-                                   You can copy directly from livesplit or a spreadsheet.
-                                   See 'FAQ' for more details."/>
+                                   The segment names, durations and golds are required as columns.
+                                   You can copy data directly from livesplit or a spreadsheet.
+                                   See 'How to Use' for more details."/>
                 </Title>
                 <textarea name='rawdata' onChange={props.handleChange} rows={10} cols={30} maxLength={5000} />
             </label>

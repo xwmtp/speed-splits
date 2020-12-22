@@ -67,5 +67,3 @@ def splits_form_endpoint():
         return {'error': f"Error while constructing data table, please verify submitted data and see 'FAQ'."}
     else:
         return table_data
-
-
