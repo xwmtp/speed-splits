@@ -33,9 +33,6 @@ const Text = styled.div`
         background: rgb(25,25,25);
         padding: 0px 3px;*/
     }
-    br {
-        marg
-    }
 
 `
 
@@ -48,7 +45,7 @@ function FAQ() {
                     A simple tool for speedrunners to get more insights into their splits.
                     You can see your timesaves, your balanced splits, and compare your runs to previous ones or to those of your competitors.
                 </p>
-                <h3>How do use it?</h3>
+                <h3>How do you use it?</h3>
                 <p>
                     Paste a <a href='https://splits.io/'>splits.io</a> link or the raw data of your run under 'YOU'.
                     Leave the 'THEM' fields empty if you just want to analyse your own splits.
@@ -74,7 +71,7 @@ function FAQ() {
                     It's easiest to copy your data from a spreadsheet, which will automatically separate your columns by tabs.
                     Don't include a column header.
                     <br />
-                    Click <a href={example} target="_blank">here</a> for an example of valid data to use in the <span>raw splits</span> field.
+                    Click <a href={example} target="_blank" rel="noreferrer">here</a> to view an example of valid data to use in the <span>raw splits</span> field.
                 </p>
                 <h3>How should I format durations?</h3>
                 <p>
@@ -83,11 +80,21 @@ function FAQ() {
                     It's also possible to put times in milliseconds only (like <span>89330</span> for <span>1:29.33</span>)
                     <br />
                 </p>
-                <h3>Missing splits</h3>
+                <h3>How are missing splits handled?</h3>
                 <p>
                     The tool assumes that when a split is missing, the next split contains the length of both itself and the
                     previous missing one. This goes for both PB and Gold segments, and is how <a href='https://livesplit.org/'>LiveSplit</a> normally handles
                     missing splits.
+                </p>
+                <h3>I got a weird error!</h3>
+                <p>
+                    If you're using the <span>raw splits</span> field, please read through this FAQ and make sure the data is formatted correctly.
+                    If it is, it might be a bug.
+                    Please submit an issue on the <a href="https://github.com/xwmtp/split-compare/issues">Github</a> page (if your issue isn't already present).
+                </p>
+                <h3>I have another question / request / ...</h3>
+                <p>
+                    You can reach me on <a href="https://discord.com/">Discord</a>: xwillmarktheplace<span>#4400</span>
                 </p>
             </Text>
         </FAQDiv>

@@ -17,18 +17,21 @@ class SplitsForm extends React.Component {
                 rawdata: ''
             }
         }
-        console.log(this.state);
         this.handleYouChange = this.handleYouChange.bind(this);
         this.handleThemChange = this.handleThemChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
-    SplitsFormDiv = styled.div`
+    SplitsFormDiv = styled.form`
         display: flex;
         flex-direction: column;
         align-items: center;
         height: 100%;
         width: 100%;
+    `
+
+    Button = styled.button `
+        width: 100px;
     `
     handleYouChange(event) {
         this.setState({ you: { ...this.state['you'], [event.target.name]: event.target.value } })
@@ -39,17 +42,16 @@ class SplitsForm extends React.Component {
     }
 
     handleFormSubmit(event) {
-        console.log(this.state)
+        event.preventDefault();
         this.props.makeRequest({ ...this.state })
     }
 
-
     render() {
-        return <this.SplitsFormDiv >
+        return <this.SplitsFormDiv onSubmit = {this.handleFormSubmit} >
             <SplitInput title='You' handleChange={this.handleYouChange} />
             <SplitInput title='Them' handleChange={this.handleThemChange} />
-            <button onClick={this.handleFormSubmit}>
-                Compare!
+            <button type='submit'>
+                Go!
                 </button>
         </this.SplitsFormDiv >
     }

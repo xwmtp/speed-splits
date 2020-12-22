@@ -59,9 +59,9 @@ const Circle = styled.div`
 
 function Tooltip(props) {
     return (
-        <TooltipDiv class='tooltip'>
+        <TooltipDiv className='tooltip'>
             <Circle>?</Circle>
-            <span class='tooltiptext'>{props.text}</span>
+            <span className='tooltiptext'>{props.text}</span>
         </TooltipDiv>
     );
 }

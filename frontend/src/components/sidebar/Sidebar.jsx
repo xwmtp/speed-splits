@@ -4,10 +4,6 @@ import SplitsForm from "./SplitsForm";
 
 class Sidebar extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     SidebarDiv = styled.div`
         flex-grow: 1;
         width: 350px;
