@@ -7,11 +7,10 @@ const FAQDiv = styled.div`
     justify-content: center;
     flex-grow: 1;
 `
-
 const Text = styled.div`
     max-width: 800px;
     width: 70%;
-    padding-top: 40px;
+    padding: 40px 0px;
     text-align: left;
     font-size: 18px;
 
@@ -20,7 +19,6 @@ const Text = styled.div`
         margin-top: 20px;
         margin-bottom: 8px;
     }
-
     a {
         color: var(--yellow);
         font-weight: bold;
@@ -33,8 +31,11 @@ const Text = styled.div`
         background: rgb(25,25,25);
         padding: 0px 3px;*/
     }
-
 `
+
+const splitsIO = <a href='https://splits.io/'>splits.io</a>
+const liveSplit = <a href='https://livesplit.org/'>LiveSplit</a>
+const discord = <a href="https://discord.com/">Discord</a>
 
 function FAQ() {
     return (
@@ -45,16 +46,16 @@ function FAQ() {
                     A simple tool for speedrunners to get more insights into their splits.
                     You can see your timesaves, your balanced splits, and compare your runs to previous ones or to those of your competitors.
                 </p>
-                <h3>How do you use it?</h3>
+                <h3>How do I use it?</h3>
                 <p>
-                    Paste a <a href='https://splits.io/'>splits.io</a> link or the raw data of your run under 'YOU'.
+                    Paste a {splitsIO} link or the raw data of your run under 'YOU'.
                     Leave the 'THEM' fields empty if you just want to analyse your own splits.
                     If you want to compare your splits to another run, put the link or data of that run under 'THEM'.
                 </p>
                 <h3>What do I put under <span>Raw Splits</span>?</h3>
                 <p>
-                    Use this field if you don't want to use data from an uploaded run on <a href='https://splits.io/'>splits.io</a>.
-                    You can directly copy from your <a href='https://livesplit.org/'>LiveSplit</a> splits and paste the data in the <span>raw splits</span> field.
+                    Use this field if you don't want to use data from an uploaded run on {splitsIO}.
+                    You can directly copy from your {liveSplit} splits and paste the data in the <span>raw splits</span> field.
                     It's also possible to copy from a spreadsheet.
                 </p>
                 <h3>What do I copy from LiveSplit?</h3>
@@ -78,23 +79,28 @@ function FAQ() {
                     Segment durations should be formatted like <span>hh:mm:ss.ms</span>, where leading zeros and milliseconds are optional.
                     If a segment is shorter than an hour, the hours can be ommitted (like <span>12:34.56</span> or <span>1:23</span>).
                     It's also possible to put times in milliseconds only (like <span>89330</span> for <span>1:29.33</span>)
-                    <br />
+                </p>
+                <h3>Can I download the data in the tables?</h3>
+                <p>
+                   There's no download button (yet), but if you want to copy the data in the tables for use in {liveSplit} or a spreadsheet,
+                   it's easiest to select all the data in the table, copy and paste in notepad first. If you copy again from there and paste
+                   to a spreadsheet, the columns should be retained.
                 </p>
                 <h3>How are missing splits handled?</h3>
                 <p>
-                    The tool assumes that when a split is missing, the next split contains the length of both itself and the
-                    previous missing one. This goes for both PB and Gold segments, and is how <a href='https://livesplit.org/'>LiveSplit</a> normally handles
+                    The tool assumes that when a split is missing, the next split contains both the length of itself and the
+                    previous split. This goes for both PB and Gold segments, and is how {liveSplit} normally handles
                     missing splits.
                 </p>
                 <h3>I got a weird error!</h3>
                 <p>
                     If you're using the <span>raw splits</span> field, please read through this FAQ and make sure the data is formatted correctly.
                     If it is, it might be a bug.
-                    Please submit an issue on the <a href="https://github.com/xwmtp/split-compare/issues">Github</a> page (if your issue isn't already present).
+                    Please submit an issue on the <a href="https://github.com/xwmtp/split-compare/issues">Github</a> page (if your issue isn't already there).
                 </p>
                 <h3>I have another question / request / ...</h3>
                 <p>
-                    You can reach me on <a href="https://discord.com/">Discord</a>: xwillmarktheplace<span>#4400</span>
+                    You can reach me on {discord}: xwillmarktheplace<span>#4400</span>
                 </p>
             </Text>
         </FAQDiv>

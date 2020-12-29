@@ -6,7 +6,6 @@ import json
 
 def get_table_data(you_base_df, them_base_df=None):
     you_df = _add_time_save_columns(you_base_df)
-    print(you_df)
     if them_base_df is None:
         you_df = build_you_df(you_df)
         return df_to_json(you_df, 'you_data', decimals=1)
@@ -112,5 +111,4 @@ def df_to_json(df, type, decimals=3):
                 'columns' : list(str_df.columns),
                 'data' : str_df.to_dict(orient='records')
     }}
-    print(json.dumps(data))
     return json.dumps(data)

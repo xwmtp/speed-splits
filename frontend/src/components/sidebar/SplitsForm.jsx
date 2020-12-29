@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import SplitInput from './SplitInput'
+import SplitInput from './FormInput'
 
 
 class SplitsForm extends React.Component {
@@ -50,9 +50,9 @@ class SplitsForm extends React.Component {
         return <this.SplitsFormDiv onSubmit = {this.handleFormSubmit} >
             <SplitInput title='You' handleChange={this.handleYouChange} />
             <SplitInput title='Them' handleChange={this.handleThemChange} />
-            <button type='submit'>
+            <this.Button type='submit'>
                 Go!
-                </button>
+                </this.Button>
         </this.SplitsFormDiv >
     }
 }
