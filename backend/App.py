@@ -1,21 +1,31 @@
 from Logger import initalize_logger
 from Parse.SplitsIO import parse_splits_io
 from Parse.RawData import parse_raw_data
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 from SplitsData import get_table_data
 import logging
+import os
 
 initalize_logger()
 logger = logging.getLogger('splt.api')
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/build')
 CORS(app)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(use_reloader=True, port=5000, threaded=True, debug=True)
 
-@app.route('/', methods=['GET'])
+# Serve React App
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/api/', methods=['GET'])
 def index():
     return 'Welcome to the SplitsCompare API.'
 

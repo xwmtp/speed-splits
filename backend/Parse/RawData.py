@@ -1,7 +1,5 @@
 import logging
 import re
-import datetime as dt
-import requests
 import pandas as pd
 import numpy as np
 
