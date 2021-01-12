@@ -22,7 +22,7 @@ function Header() {
 
     return (
         <HeaderDiv id='header' >
-            <NavLink to={'/'} className='navlink' activeClassName='current'><h1>Split Compare</h1></NavLink>
+            <NavLink to={'/'} className='navlink' activeClassName='current'><h1>SpeedSplits</h1></NavLink>
             <NavLink to={'/faq'} className='navlink' activeClassName='current'><h2>FAQ</h2></NavLink>
         </HeaderDiv>
     );

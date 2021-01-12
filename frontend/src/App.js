@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import './components/Header.jsx'
 import Header from './components/Header.jsx';
-import ComparePage from './components/compare/ComparePage.jsx'
+import ComparePage from './components/splitstable/SplitsTablePage.jsx'
 import FAQ from './components/FAQ.jsx'
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
