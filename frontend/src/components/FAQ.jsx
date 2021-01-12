@@ -56,19 +56,18 @@ function FAQ() {
                 <p>
                     Use this field if you don't want to use data from an uploaded run on {splitsIO}.
                     You can directly copy from your {liveSplit} splits and paste the data in the <span>raw splits</span> field.
-                    It's also possible to copy from a spreadsheet.
+                    It's also possible to copy data from a spreadsheet.
                 </p>
                 <h3>What do I copy from LiveSplit?</h3>
                 <p>
                     Right click your splits and select <span>Edit Splits</span>.
-                    Select all the fields under the columns named <span>Segment Name</span>, <span>Split Time</span>, <span>Segment Time</span> and <span>Best Segment</span>.
-                    The <span>Split Time</span> column won't actually be used, so you can leave it out if you use your own data.
+                    The fields <span>Segment Name</span>, <span>Segment Time</span> and <span>Best Segment</span> are required, but it's easiest to copy all the fields.
                 </p>
                 <h3>How should I format my own run data?</h3>
                 <p>
                     You need to supply the <span>names</span>, <span>PB durations</span> and <span>gold durations</span> of your segments, in that order.
                     The columns should be separated by tabs, comma's or semicolons.
-                    Spaces are not accepted since split names often contain spaces too.
+                    Make sure your segment names do not contain these characters!
                     It's easiest to copy your data from a spreadsheet, which will automatically separate your columns by tabs.
                     Don't include a column header.
                     <br />
@@ -83,20 +82,20 @@ function FAQ() {
                 <h3>Can I download the data in the tables?</h3>
                 <p>
                    There's no download button (yet), but if you want to copy the data in the tables for use in {liveSplit} or a spreadsheet,
-                   it's easiest to select all the data in the table, copy and paste in notepad first. If you copy again from there and paste
-                   to a spreadsheet, the columns should be retained.
+                   it's easiest to select all the data in the table, copy and paste to Notepad first. If you copy again from there and paste
+                   to a spreadsheet, the columns should be recognized.
                 </p>
                 <h3>How are missing splits handled?</h3>
                 <p>
-                    The tool assumes that when a split is missing, the next split contains both the length of itself and the
+                    The tool assumes that when a split is missing, the next split contains the duration of both itself and the
                     previous split. This goes for both PB and Gold segments, and is how {liveSplit} normally handles
                     missing splits.
                 </p>
                 <h3>I got a weird error!</h3>
                 <p>
                     If you're using the <span>raw splits</span> field, please read through this FAQ and make sure the data is formatted correctly.
-                    If it is, it might be a bug.
-                    Please submit an issue on the <a href="https://github.com/xwmtp/split-compare/issues">Github</a> page (if your issue isn't already there).
+                    If it is, it may be a bug.
+                    Let me know by submitting an issue on the <a href="https://github.com/xwmtp/split-compare/issues">Github</a> page (if your issue isn't already there).
                 </p>
                 <h3>I have another question / request / ...</h3>
                 <p>

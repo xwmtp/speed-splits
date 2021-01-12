@@ -33,19 +33,24 @@ def parse_delimiter(line):
             return delimiter
 
 def get_columns(rows):
+    print(rows)
     columns = {}
     for row in rows:
         for i in range(len(row)):
             if i not in columns:
                 columns[i] = []
             columns[i].append(row[i])
-    return list(columns.values())
+    columns = list(columns.values())
+    non_empty_columns = [col for col in columns if not all(c == '' for c in col)]
+    return non_empty_columns
 
 def get_split_names_column(columns):
     return columns[0]
 
 def get_pb_and_gold_columns(columns):
+    print(columns)
     candidate_columns = [col for col in columns if all(is_timestamp(c) for c in col)]
+    print(candidate_columns)
     candidate_columns = [[timestamp_to_milliseconds(ts) for ts in col] for col in candidate_columns]
     if len(candidate_columns) >= 3:
         pbs = candidate_columns[1]

@@ -59,13 +59,16 @@ def splits_form_endpoint():
     if rawdata_you != '':
         you_data  = parse_raw_data(rawdata_you)
 
+    if not you_data:
+        return {'error': "No run data submitted for 'YOU', which is required."}
+    if 'error' in you_data:
+        return {'error' : you_data['error']  + " (for 'YOU')."}
+
     if splitsio_id_them != '':
         them_data = parse_splits_io(splitsio_id_them)
     if rawdata_them != '':
         them_data = parse_raw_data(rawdata_them)
 
-    if 'error' in you_data:
-        return {'error' : you_data['error']  + " (for 'YOU')."}
     if 'error' in them_data:
         return {'error' : them_data['error'] + " (for 'THEM')."}
 
