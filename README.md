@@ -1,1 +1,1 @@
-# split-compare
+# speed-splits
