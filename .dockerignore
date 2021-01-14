@@ -1,0 +1,8 @@
+backend/venv
+backend/log
+backend/notebooks
+frontend/node_modules
+LICENSE
+.gitignore
+README.md
+upgrade.sh

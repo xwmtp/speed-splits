@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  speed-splits:
+    build:
+      context: .
+    image: speeds-splits
+    volumes:
+      - C:\Users\sdste\Documents\Programming\split-compare\logs:/etc/speed-splits/logs
+    ports:
+      - "5000:5000"
+    restart: unless-stopped

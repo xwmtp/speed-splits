@@ -14,7 +14,7 @@ app = Flask(__name__, static_folder='../frontend/build')
 CORS(app)
 
 if __name__ == '__main__':
-    app.run(use_reloader=True, port=5000, threaded=True, debug=True)
+    app.run(threaded=True, debug=False)
 
 # Serve React App
 @app.route('/', defaults={'path': ''})
@@ -27,7 +27,7 @@ def serve(path):
 
 @app.route('/api/', methods=['GET'])
 def index():
-    return 'Welcome to the SplitsCompare API.'
+    return 'Welcome to the SpeedSplits API.'
 
 @app.route('/api/splits/', methods=['GET'])
 def splitsio_endpoint():
