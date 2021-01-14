@@ -7,5 +7,5 @@ services:
     volumes:
       - split-compare/volume/logs:/etc/speed-splits/logs
     ports:
-      - "5000:5000"
+      - "14444:5000"
     restart: unless-stopped
