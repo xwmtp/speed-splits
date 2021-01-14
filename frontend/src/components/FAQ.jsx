@@ -95,7 +95,7 @@ function FAQ() {
                 <p>
                     If you're using the <span>raw splits</span> field, please read through this FAQ and make sure the data is formatted correctly.
                     If it is, it may be a bug.
-                    Let me know by submitting an issue on the <a href="https://github.com/xwmtp/split-compare/issues">Github</a> page (if your issue isn't already there).
+                    Let me know by submitting an issue on the <a href="https://github.com/xwmtp//issues">Github</a> page (if your issue isn't already there).
                 </p>
                 <h3>I have another question / request / ...</h3>
                 <p>
