@@ -3,9 +3,9 @@ services:
   speed-splits:
     build:
       context: .
-    image: speeds-splits
+    image: speed-splits
     volumes:
-      - split-compare/volume/logs:/etc/speed-splits/logs
+      - /speed-splits/volume/logs:/etc/speed-splits/logs
     ports:
       - "14444:5000"
     restart: unless-stopped
