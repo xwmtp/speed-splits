@@ -33,9 +33,10 @@ const Text = styled.div`
     }
 `
 
-const splitsIO = <a href='https://splits.io/'>splits.io</a>
-const liveSplit = <a href='https://livesplit.org/'>LiveSplit</a>
-const discord = <a href="https://discord.com/">Discord</a>
+const splitsIO = <a href='https://splits.io/' target="_blank" rel="noreferrer">splits.io</a>
+const liveSplit = <a href='https://livesplit.org/' target="_blank" rel="noreferrer">LiveSplit</a>
+const discord = <a href="https://discord.com/" target="_blank" rel="noreferrer">Discord</a>
+const github = <a href="https://github.com/xwmtp/speed-splits/issues" target="_blank" rel="noreferrer">Github</a>
 
 function FAQ() {
     return (
@@ -95,7 +96,7 @@ function FAQ() {
                 <p>
                     If you're using the <span>raw splits</span> field, please read through this FAQ and make sure the data is formatted correctly.
                     If it is, it may be a bug.
-                    Let me know by submitting an issue on the <a href="https://github.com/xwmtp/speed-splits/issues">Github</a> page (if your issue isn't already there).
+                    Let me know by submitting an issue on the {github} page (if your issue isn't already there).
                 </p>
                 <h3>I have another question / request / ...</h3>
                 <p>
